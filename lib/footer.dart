@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_task_mobile/forms/Calender.dart';
 import 'package:personal_task_mobile/forms/entry.dart';
 import 'package:personal_task_mobile/forms/routine.dart';
 import 'package:personal_task_mobile/forms/search.dart';
@@ -92,6 +93,14 @@ class _Footer extends State {
                 context,
                 MaterialPageRoute(
                   builder: (context) => Routine(),
+                ));
+            break;
+          case Footer.iconCalenderToday:
+          // ルーティン画面に遷移
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Calender(),
                 ));
             break;
         }

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:personal_task_mobile/footer.dart';
 
-class Search extends StatefulWidget {
-  Search({Key key, this.title}) : super(key: key);
+class Routine extends StatefulWidget {
+  Routine({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _SearchState createState() => _SearchState();
+  _RoutineState createState() => _RoutineState();
 }
 
-class _SearchState extends State<Search> {
+class _RoutineState extends State<Routine> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -22,7 +22,7 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("検索"),
+        title: Text("ルーティン"),
       ),
       body: Center(
         child: Column(
@@ -43,7 +43,7 @@ class _SearchState extends State<Search> {
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
-        bottomNavigationBar: Footer(Footer.iconSearch) // <- Footer Widget (Footer Instance)を指定// This trailing comma makes auto-formatting nicer for build methods.
+        bottomNavigationBar: Footer(Footer.iconWatchLater) // <- Footer Widget (Footer Instance)を指定// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

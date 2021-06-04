@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_task_mobile/forms/entry.dart';
+import 'package:personal_task_mobile/forms/routine.dart';
 import 'package:personal_task_mobile/forms/search.dart';
 import 'package:personal_task_mobile/main.dart';
 
@@ -61,8 +62,16 @@ class _Footer extends State {
 
         switch (index) {
           case Footer.iconHome:
+          // ホーム画面に遷移
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyHomePage(),
+                ));
+            break;
             break;
           case Footer.iconSearch:
+            // 検索画面に遷移
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -70,10 +79,19 @@ class _Footer extends State {
                 ));
             break;
           case Footer.iconAdd:
+            // 登録画面に遷移
             Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => Entry(),
+                ));
+            break;
+          case Footer.iconWatchLater:
+          // ルーティン画面に遷移
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Routine(),
                 ));
             break;
         }

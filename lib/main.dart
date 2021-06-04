@@ -7,10 +7,10 @@ import 'footer.dart';
 
 void main() {
   runApp(
-      // MyApp(),
+    // MyApp(),
     new MaterialApp(
       initialRoute: '/',
-      routes: <String, WidgetBuilder> {
+      routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => MyHomePage(),
         '/search': (BuildContext context) => Search(),
         '/entry': (BuildContext context) => Entry(),
@@ -48,6 +48,15 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool _isCheck = false;
   bool _isDoing = false;
+  int _index = 0;
+
+  Widget _mainWidget;
+
+  @override
+  // 初期処理
+  void initState() {
+    _mainWidget = _buildHomePage();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,85 +64,176 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("PersonalTask"),
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 330,
-                  child: CheckboxListTile(
-                    activeColor: Colors.grey,
-                    title: Text('請求書作成',
-                        style: TextStyle(
-                            decoration: _isCheck
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none,
-                            color: _isCheck ? Colors.grey : Colors.black)),
-                    subtitle: Text(
-                      'plan 2021.06.04  due 2021.06.30',
+      body: _mainWidget,
+      bottomNavigationBar: _buildFooter(),
+    );
+  }
+
+  BottomNavigationBar _buildFooter() {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.search),
+          label: '検索',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.add),
+          label: '追加',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.watch_later),
+          label: 'ルーティン',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.calendar_today),
+          label: 'カレンダー',
+        ),
+      ],
+      currentIndex: _index,
+      selectedItemColor: Colors.blue,
+      onTap: (int index) {
+        print(index);
+
+        switch (index) {
+          case Footer.iconHome:
+            setState(() {
+              _mainWidget = _buildHomePage();
+            });
+            break;
+          case Footer.iconSearch:
+            setState(() {
+              _mainWidget = _buildSearch();
+            });
+            break;
+          case Footer.iconAdd:
+            setState(() {
+              _mainWidget = _buildEntry();
+            });
+            break;
+          case Footer.iconWatchLater:
+            // ルーティン画面に遷移
+            setState(() {
+              _mainWidget = _buildRoutine();
+            });
+            break;
+          case Footer.iconCalenderToday:
+            // カレンダー画面に遷移
+            setState(() {
+              _mainWidget = _buildCalender();
+            });
+            break;
+        }
+        this._index = index;
+      },
+    );
+  }
+
+  Widget _buildHomePage() {
+    return Container(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 330,
+                child: CheckboxListTile(
+                  activeColor: Colors.grey,
+                  title: Text('請求書作成',
                       style: TextStyle(
                           decoration: _isCheck
                               ? TextDecoration.lineThrough
                               : TextDecoration.none,
-                          color: _isCheck ? Colors.grey : Colors.black45),
-                    ),
-                    // secondary: new Icon(
-                    //   Icons.thumb_up,
-                    //   color: _isCheck ? Colors.orange[700] : Colors.grey[500],
-                    // ),
-                    controlAffinity: ListTileControlAffinity.leading,
-                    value: _isCheck,
-                    onChanged: (bool value) {
-                      setState(() {
-                        _isCheck = value;
-                      });
-                    },
+                          color: _isCheck ? Colors.grey : Colors.black)),
+                  subtitle: Text(
+                    'plan 2021.06.04  due 2021.06.30',
+                    style: TextStyle(
+                        decoration: _isCheck
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
+                        color: _isCheck ? Colors.grey : Colors.black45),
                   ),
+                  // secondary: new Icon(
+                  //   Icons.thumb_up,
+                  //   color: _isCheck ? Colors.orange[700] : Colors.grey[500],
+                  // ),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  value: _isCheck,
+                  onChanged: (bool value) {
+                    setState(() {
+                      _isCheck = value;
+                    });
+                  },
                 ),
-                Container(
-                  width: 40,
-                  // child: Text("あああ"),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.bookmark,
-                      color: _isCheck
-                          ? Colors.grey
-                          : _isDoing
-                              ? Colors.blue
-                              : Colors.grey,
-
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isDoing = !_isDoing;
-                      });
-                    },
+              ),
+              Container(
+                width: 40,
+                // child: Text("あああ"),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.bookmark,
+                    color: _isCheck
+                        ? Colors.grey
+                        : _isDoing
+                            ? Colors.blue
+                            : Colors.grey,
                   ),
+                  onPressed: () {
+                    setState(() {
+                      _isDoing = !_isDoing;
+                    });
+                  },
                 ),
-                Container(
-                  width: 40,
-                  // child: Text("あああ"),
-                  child: IconButton(
-                    icon: Icon(Icons.more_vert),
-                  ),
+              ),
+              Container(
+                width: 40,
+                // child: Text("あああ"),
+                child: IconButton(
+                  icon: Icon(Icons.more_vert),
                 ),
-              ],
-            ),
-            RaisedButton(
-              child: Text('次へ'),
-              onPressed: (){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Entry(),
-                    )
-                );
-              },
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+          RaisedButton(
+            child: Text('次へ'),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Entry(),
+                  ));
+            },
+          ),
+        ],
       ),
-        bottomNavigationBar: Footer(Footer.iconHome) // <- Footer Widget (Footer Instance)を指定
+    );
+  }
+
+  Widget _buildSearch() {
+    return Container(
+      child: Text("検索画面ですぜ"),
+    );
+  }
+
+  Widget _buildEntry() {
+    return Container(
+      child: Text("登録画面ですぜ"),
+    );
+  }
+
+  Widget _buildRoutine() {
+    return Container(
+      child: Text("ルーティン画面ですぜ"),
+    );
+  }
+
+  Widget _buildCalender() {
+    return Container(
+      child: Text("カレンダー画面ですぜ"),
     );
   }
 }

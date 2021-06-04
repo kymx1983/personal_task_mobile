@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class Footer extends StatefulWidget {
-  const Footer();
+  int index = 0;
+
+  Footer(int index) {
+    this.index = index;
+  }
 
   @override
-  _Footer createState() => _Footer();
+  _Footer createState() => _Footer(index);
 }
 
 class _Footer extends State {
+  int index;
+  _Footer(int index){
+    this.index = index;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -34,6 +44,8 @@ class _Footer extends State {
           label: 'カレンダー',
         ),
       ],
+      currentIndex: this.index,
+      selectedItemColor: Colors.blue,
     );
   }
 }

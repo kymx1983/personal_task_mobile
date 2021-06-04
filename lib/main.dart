@@ -107,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-        bottomNavigationBar: Footer() // <- Footer Widget (Footer Instance)を指定
+        bottomNavigationBar: Footer(0) // <- Footer Widget (Footer Instance)を指定
     );
   }
 }

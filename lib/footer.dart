@@ -63,45 +63,25 @@ class _Footer extends State {
 
         switch (index) {
           case Footer.iconHome:
-          // ホーム画面に遷移
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MyHomePage(),
-                ));
-            break;
+            // ホーム画面に遷移
+            Navigator.pushReplacementNamed(context, "/");
             break;
           case Footer.iconSearch:
             // 検索画面に遷移
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Search(),
-                ));
+            // Navigator.of(context).pushNamed('/search');
+            Navigator.pushReplacementNamed(context, "/search");
             break;
           case Footer.iconAdd:
             // 登録画面に遷移
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Entry(),
-                ));
+            Navigator.pushReplacementNamed(context, "/entry");
             break;
           case Footer.iconWatchLater:
-          // ルーティン画面に遷移
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Routine(),
-                ));
+            // ルーティン画面に遷移
+            Navigator.pushReplacementNamed(context, "/routine");
             break;
           case Footer.iconCalenderToday:
-          // ルーティン画面に遷移
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Calender(),
-                ));
+            // カレンダー画面に遷移
+            Navigator.pushReplacementNamed(context, "/calender");
             break;
         }
 

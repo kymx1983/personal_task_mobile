@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:personal_task_mobile/forms/Calender.dart';
 import 'package:personal_task_mobile/forms/entry.dart';
+import 'package:personal_task_mobile/forms/routine.dart';
+import 'package:personal_task_mobile/forms/search.dart';
 import 'footer.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+      // MyApp(),
+    new MaterialApp(
+      initialRoute: '/',
+      routes: <String, WidgetBuilder> {
+        '/': (BuildContext context) => MyHomePage(),
+        '/search': (BuildContext context) => Search(),
+        '/entry': (BuildContext context) => Entry(),
+        '/routine': (BuildContext context) => Routine(),
+        '/calender': (BuildContext context) => Calender(),
+      },
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

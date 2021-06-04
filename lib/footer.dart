@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:personal_task_mobile/forms/entry.dart';
+import 'package:personal_task_mobile/forms/search.dart';
+import 'package:personal_task_mobile/main.dart';
 
 // ignore: must_be_immutable
 class Footer extends StatefulWidget {
   int index = 0;
+
+  static const int iconHome = 0;
+  static const int iconSearch = 1;
+  static const int iconAdd = 2;
+  static const int iconWatchLater = 3;
+  static const int iconCalenderToday = 4;
 
   Footer(int index) {
     this.index = index;
@@ -14,7 +23,8 @@ class Footer extends StatefulWidget {
 
 class _Footer extends State {
   int index;
-  _Footer(int index){
+
+  _Footer(int index) {
     this.index = index;
   }
 
@@ -46,6 +56,37 @@ class _Footer extends State {
       ],
       currentIndex: this.index,
       selectedItemColor: Colors.blue,
+      onTap: (int index) {
+        print(index);
+
+        switch (index) {
+          case Footer.iconHome:
+            break;
+          case Footer.iconSearch:
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Search(),
+                ));
+            break;
+          case Footer.iconAdd:
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Entry(),
+                ));
+            break;
+        }
+
+        if (index == Footer.iconHome) {
+          // トップページへ遷移
+          // MaterialPageRoute(builder: (context) => MyHomePage());
+        } else if (index == Footer.iconAdd) {
+          print("登録");
+          // 登録ページへ遷移
+
+        }
+      },
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_task_mobile/forms/entry.dart';
 import 'footer.dart';
 
 void main() {
@@ -104,10 +105,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ],
             ),
+            RaisedButton(
+              child: Text('次へ'),
+              onPressed: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Entry(),
+                    )
+                );
+              },
+            ),
           ],
         ),
       ),
-        bottomNavigationBar: Footer(0) // <- Footer Widget (Footer Instance)を指定
+        bottomNavigationBar: Footer(Footer.iconHome) // <- Footer Widget (Footer Instance)を指定
     );
   }
 }

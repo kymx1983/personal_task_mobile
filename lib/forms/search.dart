@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:personal_task_mobile/footer.dart';
 
-class Entry extends StatefulWidget {
-  Entry({Key key, this.title}) : super(key: key);
+class Search extends StatefulWidget {
+  Search({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _EntryState createState() => _EntryState();
+  _SearchState createState() => _SearchState();
 }
 
-class _EntryState extends State<Entry> {
+class _SearchState extends State<Search> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -43,7 +43,7 @@ class _EntryState extends State<Entry> {
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
-        bottomNavigationBar: Footer(Footer.iconAdd) // <- Footer Widget (Footer Instance)を指定// This trailing comma makes auto-formatting nicer for build methods.
+        bottomNavigationBar: Footer(Footer.iconSearch) // <- Footer Widget (Footer Instance)を指定// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

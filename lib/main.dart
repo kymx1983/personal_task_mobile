@@ -12,10 +12,6 @@ void main() {
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => MyHomePage(),
-        '/search': (BuildContext context) => Search(),
-        '/entry': (BuildContext context) => Entry(),
-        '/routine': (BuildContext context) => Routine(),
-        '/calender': (BuildContext context) => Calender(),
       },
     ),
   );
@@ -107,24 +103,24 @@ class _MyHomePageState extends State<MyHomePage> {
             break;
           case Footer.iconSearch:
             setState(() {
-              _mainWidget = _buildSearch();
+              _mainWidget = Search.buildSearch();
             });
             break;
           case Footer.iconAdd:
             setState(() {
-              _mainWidget = _buildEntry();
+              _mainWidget = Entry.buildEntry();
             });
             break;
           case Footer.iconWatchLater:
             // ルーティン画面に遷移
             setState(() {
-              _mainWidget = _buildRoutine();
+              _mainWidget = Routine.buildRoutine();
             });
             break;
           case Footer.iconCalenderToday:
             // カレンダー画面に遷移
             setState(() {
-              _mainWidget = _buildCalender();
+              _mainWidget = Calender.buildCalender();
             });
             break;
         }
@@ -204,36 +200,12 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Entry(),
+                    // builder: (context) => Entry(),
                   ));
             },
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildSearch() {
-    return Container(
-      child: Text("検索画面ですぜ"),
-    );
-  }
-
-  Widget _buildEntry() {
-    return Container(
-      child: Text("登録画面ですぜ"),
-    );
-  }
-
-  Widget _buildRoutine() {
-    return Container(
-      child: Text("ルーティン画面ですぜ"),
-    );
-  }
-
-  Widget _buildCalender() {
-    return Container(
-      child: Text("カレンダー画面ですぜ"),
     );
   }
 }

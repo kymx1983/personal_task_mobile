@@ -51,21 +51,22 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   // 初期処理
   void initState() {
-    _mainWidget = _buildHomePage();
+
   }
 
   @override
   Widget build(BuildContext context) {
+    _mainWidget = _buildHomePage(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("PersonalTask"),
       ),
       body: _mainWidget,
-      bottomNavigationBar: _buildFooter(),
+      bottomNavigationBar: _buildFooter(context),
     );
   }
 
-  BottomNavigationBar _buildFooter() {
+  BottomNavigationBar _buildFooter(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       items: const [
@@ -98,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
         switch (index) {
           case Footer.iconHome:
             setState(() {
-              _mainWidget = _buildHomePage();
+              _mainWidget = _buildHomePage(context);
             });
             break;
           case Footer.iconSearch:
@@ -129,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget _buildHomePage() {
+  Widget _buildHomePage(BuildContext context) {
     return Container(
       child: Column(
         children: [

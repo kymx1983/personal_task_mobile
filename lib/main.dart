@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_task_mobile/forms/Calender.dart';
 import 'package:personal_task_mobile/forms/entry.dart';
+import 'package:personal_task_mobile/forms/home.dart';
 import 'package:personal_task_mobile/forms/routine.dart';
 import 'package:personal_task_mobile/forms/search.dart';
 import 'footer.dart';
@@ -42,21 +43,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool _isCheck = false;
-  bool _isDoing = false;
   int _index = 0;
 
-  Widget _mainWidget;
-
-  @override
-  // 初期処理
-  void initState() {
-
-  }
+  Widget _mainWidget = new Home();
 
   @override
   Widget build(BuildContext context) {
-    _mainWidget = _buildHomePage(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("PersonalTask"),
@@ -99,12 +91,12 @@ class _MyHomePageState extends State<MyHomePage> {
         switch (index) {
           case Footer.iconHome:
             setState(() {
-              _mainWidget = _buildHomePage(context);
+              _mainWidget = new Home();
             });
             break;
           case Footer.iconSearch:
             setState(() {
-              _mainWidget = Search.buildSearch();
+              _mainWidget = new Search();
             });
             break;
           case Footer.iconAdd:
@@ -127,86 +119,6 @@ class _MyHomePageState extends State<MyHomePage> {
         }
         this._index = index;
       },
-    );
-  }
-
-  Widget _buildHomePage(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 330,
-                child: CheckboxListTile(
-                  activeColor: Colors.grey,
-                  title: Text('請求書作成',
-                      style: TextStyle(
-                          decoration: _isCheck
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
-                          color: _isCheck ? Colors.grey : Colors.black)),
-                  subtitle: Text(
-                    'plan 2021.06.04  due 2021.06.30',
-                    style: TextStyle(
-                        decoration: _isCheck
-                            ? TextDecoration.lineThrough
-                            : TextDecoration.none,
-                        color: _isCheck ? Colors.grey : Colors.black45),
-                  ),
-                  // secondary: new Icon(
-                  //   Icons.thumb_up,
-                  //   color: _isCheck ? Colors.orange[700] : Colors.grey[500],
-                  // ),
-                  controlAffinity: ListTileControlAffinity.leading,
-                  value: _isCheck,
-                  onChanged: (bool value) {
-                    setState(() {
-                      _isCheck = value;
-                    });
-                  },
-                ),
-              ),
-              Container(
-                width: 40,
-                // child: Text("あああ"),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.bookmark,
-                    color: _isCheck
-                        ? Colors.grey
-                        : _isDoing
-                            ? Colors.blue
-                            : Colors.grey,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _isDoing = !_isDoing;
-                    });
-                  },
-                ),
-              ),
-              Container(
-                width: 40,
-                // child: Text("あああ"),
-                child: IconButton(
-                  icon: Icon(Icons.more_vert),
-                ),
-              ),
-            ],
-          ),
-          RaisedButton(
-            child: Text('次へ'),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    // builder: (context) => Entry(),
-                  ));
-            },
-          ),
-        ],
-      ),
     );
   }
 }

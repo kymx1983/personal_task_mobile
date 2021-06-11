@@ -4,8 +4,8 @@ import 'package:personal_task_mobile/models/task.dart';
 import "package:intl/intl.dart";
 
 class Home extends StatefulWidget {
-  Home({Key key, this.title}) : super(key: key);
-  final String title;
+  // Home({Key key, this.title}) : super(key: key);
+  // final String title;
 
   @override
   _HomeState createState() => _HomeState();
@@ -13,7 +13,34 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  List<Task> tasks = new List<Task>();
+  List<Task> tasks = [];
+
+  bool _isDay = true;
+  bool _isWeek = false;
+
+  String _type = 'favorite';
+
+  void _handleRadio(String e) {
+    setState(() {
+      print(e);
+      String _type = 'week';
+    });
+  }
+
+  IconData _changeIcon(String e) {
+    IconData icon;
+    switch (e) {
+      case 'thumb_up':
+        icon = Icons.thumb_up;
+        break;
+      case 'favorite':
+        icon = Icons.favorite;
+        break;
+      default:
+        icon = Icons.thumb_up;
+    }
+    return icon;
+  }
 
   // 初期処理
   @override
@@ -109,6 +136,7 @@ class _HomeState extends State<Home> {
                                       : TextDecoration.none,
                                   color: task.isCheck ? Colors.grey : Colors.black)),
                           subtitle: Text(
+
                             "due:" + DateFormat(Common.formatDateOnly).format(task.due),
                             style: TextStyle(
                                 decoration: task.isCheck
@@ -118,9 +146,9 @@ class _HomeState extends State<Home> {
                           ),
                           controlAffinity: ListTileControlAffinity.leading,
                           value: task.isCheck,
-                          onChanged: (bool value) {
+                          onChanged: (bool? value) {
                             setState(() {
-                              task.isCheck = value;
+                              task.isCheck = value!;
                             });
                           },
                         ),
@@ -156,6 +184,42 @@ class _HomeState extends State<Home> {
                       ),
                     ],
                   ),
+                // Row(
+                //   children: [
+                //     Container(
+                //       width: 100,
+                //       padding: const EdgeInsets.all(10),
+                //       child:  Text("サイクル"),
+                //     ),
+                //
+                //     Container(
+                //       width: 300,
+                //       padding: const EdgeInsets.all(10),
+                //       child: Column(
+                //         children: [
+                //           new Radio(
+                //             activeColor: Colors.blue,
+                //             value: 'thumb_up',
+                //             groupValue: _type,
+                //             onChanged: _handleRadio,
+                //           ),
+                //           new Radio(
+                //             activeColor: Colors.orange,
+                //             value: 'favorite',
+                //             groupValue: _type,
+                //             onChanged: _handleRadio,
+                //           ),
+                //           new Radio(
+                //             activeColor: Colors.green,
+                //             value: 'week',
+                //             groupValue: _type,
+                //             onChanged: _handleRadio,
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),

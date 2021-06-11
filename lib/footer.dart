@@ -24,7 +24,7 @@ class Footer extends StatefulWidget {
 }
 
 class _Footer extends State {
-  int index;
+  int index = 0;
 
   _Footer(int index) {
     this.index = index;

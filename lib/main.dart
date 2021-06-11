@@ -20,6 +20,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  String title = "";
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,15 +30,16 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  // MyHomePage({Key key, this.title}) : super(key: key);
+  //
+  final String title = "";
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -101,13 +104,13 @@ class _MyHomePageState extends State<MyHomePage> {
             break;
           case Footer.iconAdd:
             setState(() {
-              _mainWidget = Entry.buildEntry();
+              _mainWidget = new Entry();
             });
             break;
           case Footer.iconWatchLater:
             // ルーティン画面に遷移
             setState(() {
-              _mainWidget = Routine.buildRoutine();
+              _mainWidget = new Routine();
             });
             break;
           case Footer.iconCalenderToday:

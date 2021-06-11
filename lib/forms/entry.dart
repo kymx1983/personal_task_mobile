@@ -3,7 +3,6 @@ import 'package:personal_task_mobile/common/common.dart';
 import "package:intl/intl.dart";
 
 class Entry extends StatefulWidget {
-
   @override
   _EntryState createState() => _EntryState();
 }
@@ -11,7 +10,6 @@ class Entry extends StatefulWidget {
 enum SingingCharacter { day, week, month, target }
 
 class _EntryState extends State<Entry> {
-
   // 日付の指定を行うかどうかのフラグ
   bool _isDate = false;
 
@@ -124,59 +122,59 @@ class _EntryState extends State<Entry> {
                         ],
                       ),
                       if (_isDate)
-                      Row(
-                        children: [
-                          Container(
-                            width: _widthItemTitle,
-                            child: Text("日付"),
-                          ),
-                          Text(
-                            DateFormat(Common.formatDateOnly).format(_date),
-                          ),
-                          Container(
-                            width: Common.widthIcon,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.calendar_today,
-                                color: Colors.black,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _selectDate(context);
-                                });
-                              },
+                        Row(
+                          children: [
+                            Container(
+                              width: _widthItemTitle,
+                              child: Text("日付"),
                             ),
-                          ),
-                        ],
-                      ),
+                            Text(
+                              DateFormat(Common.formatDateOnly).format(_date),
+                            ),
+                            Container(
+                              width: Common.widthIcon,
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.calendar_today,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _selectDate(context);
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       if (_isDate)
-                      Row(
-                        children: [
-                          Container(
-                            width: _widthItemTitle,
-                            child: Text("時刻"),
-                          ),
-                          Text(
-                            _time.hour.toString().padLeft(2,"0") +
-                                ":" +
-                                _time.minute.toString().padLeft(2,"0"),
-                          ),
-                          Container(
-                            width: Common.widthIcon,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.watch_later_outlined,
-                                color: Colors.black,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _selectTime(context);
-                                });
-                              },
+                        Row(
+                          children: [
+                            Container(
+                              width: _widthItemTitle,
+                              child: Text("時刻"),
                             ),
-                          ),
-                        ],
-                      ),
+                            Text(
+                              _time.hour.toString().padLeft(2, "0") +
+                                  ":" +
+                                  _time.minute.toString().padLeft(2, "0"),
+                            ),
+                            Container(
+                              width: Common.widthIcon,
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.watch_later_outlined,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _selectTime(context);
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                     ],
                   ),
                 ),

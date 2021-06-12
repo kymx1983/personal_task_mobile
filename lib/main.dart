@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:personal_task_mobile/forms/Calender.dart';
+import 'package:personal_task_mobile/enums/footer_items.dart';
+import 'package:personal_task_mobile/forms/setting.dart';
 import 'package:personal_task_mobile/forms/entry.dart';
 import 'package:personal_task_mobile/forms/home.dart';
 import 'package:personal_task_mobile/forms/routine.dart';
 import 'package:personal_task_mobile/forms/search.dart';
-import 'footer.dart';
 
 void main() {
   runApp(
@@ -82,8 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
           label: 'ルーティン',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.calendar_today),
-          label: 'カレンダー',
+          icon: Icon(Icons.settings),
+          label: '設定',
         ),
       ],
       currentIndex: _index,
@@ -92,31 +92,31 @@ class _MyHomePageState extends State<MyHomePage> {
         print(index);
 
         switch (index) {
-          case Footer.iconHome:
+          case FooterItems.home:
             setState(() {
               _mainWidget = new Home();
             });
             break;
-          case Footer.iconSearch:
+          case FooterItems.search:
             setState(() {
               _mainWidget = new Search();
             });
             break;
-          case Footer.iconAdd:
+          case FooterItems.entry:
             setState(() {
               _mainWidget = new Entry();
             });
             break;
-          case Footer.iconWatchLater:
+          case FooterItems.routine:
             // ルーティン画面に遷移
             setState(() {
               _mainWidget = new Routine();
             });
             break;
-          case Footer.iconCalenderToday:
+          case FooterItems.setting:
             // カレンダー画面に遷移
             setState(() {
-              _mainWidget = Calender.buildCalender();
+              _mainWidget = Setting.buildCalender();
             });
             break;
         }

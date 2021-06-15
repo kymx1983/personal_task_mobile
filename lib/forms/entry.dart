@@ -10,6 +10,13 @@ class Entry extends StatefulWidget {
 enum SingingCharacter { day, week, month, target }
 
 class _EntryState extends State<Entry> {
+  List<Text> _list = [
+    Text(
+      "初期値",
+      style: TextStyle(fontSize: 20),
+    ),
+  ];
+
   // 日付の指定を行うかどうかのフラグ
   bool _isDate = false;
 
@@ -50,38 +57,10 @@ class _EntryState extends State<Entry> {
                     enabled: true,
                     // 入力数
                     maxLength: 50,
-                    style: TextStyle(color: Colors.red),
                     obscureText: false,
                     maxLines: 1,
                     decoration: const InputDecoration(
                         // hintText: "タスクを入力",
-                        // labelText: "タスク",
-                        ),
-                    //パスワード
-                    // onChanged: _handleText,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                  width: _widthItemTitle,
-                  padding: const EdgeInsets.all(10),
-                  child: Text("メモ"),
-                ),
-                Container(
-                  width: _widthItem,
-                  padding: const EdgeInsets.all(10),
-                  child: TextFormField(
-                    enabled: true,
-                    // 入力数
-                    maxLength: 300,
-                    style: TextStyle(color: Colors.red),
-                    obscureText: false,
-                    maxLines: 2,
-                    decoration: const InputDecoration(
-                        // hintText: "メモを入力",
                         // labelText: "タスク",
                         ),
                     //パスワード
@@ -176,6 +155,37 @@ class _EntryState extends State<Entry> {
                           ],
                         ),
                     ],
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Container(
+                  width: _widthItemTitle,
+                  padding: const EdgeInsets.all(10),
+                  child: Text("メモ"),
+                ),
+                Container(
+                  width: _widthItem,
+                  padding: const EdgeInsets.all(10),
+                  child: TextFormField(
+                    enabled: true,
+                    obscureText: false,
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blue,
+                        ),
+                      ),
+                      // onChanged: _handleText,
+                    ),
                   ),
                 ),
               ],

@@ -4,7 +4,7 @@ import 'package:personal_task_mobile/forms/setting.dart';
 import 'package:personal_task_mobile/forms/entry.dart';
 import 'package:personal_task_mobile/forms/home.dart';
 import 'package:personal_task_mobile/forms/routine.dart';
-import 'package:personal_task_mobile/forms/search.dart';
+import 'package:personal_task_mobile/forms/ticket.dart';
 
 void main() {
   runApp(
@@ -70,16 +70,16 @@ class _MyHomePageState extends State<MyHomePage> {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: '検索',
+          icon: Icon(Icons.calendar_today),
+          label: 'ルーティン',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.add),
           label: '追加',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.watch_later),
-          label: 'ルーティン',
+          icon: Icon(Icons.bookmark),
+          label: 'チケット',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
@@ -97,9 +97,9 @@ class _MyHomePageState extends State<MyHomePage> {
               _mainWidget = new Home();
             });
             break;
-          case FooterItems.search:
+          case FooterItems.info:
             setState(() {
-              _mainWidget = new Search();
+              _mainWidget = new Ticket();
             });
             break;
           case FooterItems.entry:

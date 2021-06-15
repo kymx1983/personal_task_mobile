@@ -136,33 +136,6 @@ class _RoutineState extends State<Routine> {
                 Container(
                   width: _widthItemTitle,
                   padding: const EdgeInsets.all(10),
-                  child: Text("メモ"),
-                ),
-                Container(
-                  width: _widthItem,
-                  padding: const EdgeInsets.all(10),
-                  child: TextFormField(
-                    enabled: true,
-                    // 入力数
-                    maxLength: 300,
-                    style: TextStyle(color: Colors.red),
-                    obscureText: false,
-                    maxLines: 2,
-                    decoration: const InputDecoration(
-                        // hintText: "メモを入力",
-                        // labelText: "タスク",
-                        ),
-                    //パスワード
-                    // onChanged: _handleText,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                  width: _widthItemTitle,
-                  padding: const EdgeInsets.all(10),
                   child: Text("サイクル"),
                 ),
                 Container(
@@ -311,6 +284,36 @@ class _RoutineState extends State<Routine> {
                         ],
                       ),
                     ],
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Container(
+                  width: _widthItemTitle,
+                  padding: const EdgeInsets.all(10),
+                  child: Text("メモ"),
+                ),
+                Container(
+                  width: _widthItem,
+                  padding: const EdgeInsets.all(10),
+                  child: TextFormField(
+                    style: TextStyle(color: Colors.red),
+                    obscureText: false,
+                    maxLines: 5,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),// onChanged: _handleText,
                   ),
                 ),
               ],

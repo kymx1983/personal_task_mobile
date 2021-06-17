@@ -123,7 +123,6 @@ class _TicketState extends State<Ticket> {
                     child: Text("タスク"),
                   ),
                   Container(
-
                     width: 90,
                     padding: const EdgeInsets.all(10),
                     child: ElevatedButton(

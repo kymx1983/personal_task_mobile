@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
           case FooterItems.setting:
             // カレンダー画面に遷移
             setState(() {
-              _mainWidget = Setting.buildCalender();
+              _mainWidget = new Setting();
             });
             break;
         }

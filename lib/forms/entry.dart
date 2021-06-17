@@ -10,12 +10,6 @@ class Entry extends StatefulWidget {
 enum SingingCharacter { day, week, month, target }
 
 class _EntryState extends State<Entry> {
-  List<Text> _list = [
-    Text(
-      "初期値",
-      style: TextStyle(fontSize: 20),
-    ),
-  ];
 
   // 日付の指定を行うかどうかのフラグ
   bool _isDate = false;
@@ -25,6 +19,12 @@ class _EntryState extends State<Entry> {
 
   // 選択した時刻（初期値は9:00とする）
   TimeOfDay _time = new TimeOfDay(hour: 9, minute: 0);
+
+  // チェックリスト
+  List<String> todoList = [];
+
+  // チェックリストテキストのコントローラ
+  var _checklistController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +36,11 @@ class _EntryState extends State<Entry> {
 
     // 項目の横幅（画面横幅 - 項目名の横幅 - マージン）
     final double _widthItem = _size.width - _widthItemTitle - 20;
+
+    // 追加ボタンの横幅
+    final double _widthAddButton = 90;
+
+    final double _widthTrashIcon = 20;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -186,6 +191,92 @@ class _EntryState extends State<Entry> {
                       ),
                       // onChanged: _handleText,
                     ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Container(
+                  width: _widthItemTitle,
+                  padding: const EdgeInsets.all(10),
+                  child: Text("リスト"),
+                ),
+                Container(
+                  width: _widthItem - _widthAddButton,
+                  padding: const EdgeInsets.all(10),
+                  child: TextFormField(
+                    controller: _checklistController,
+                    onChanged: (String value) {
+                      setState(() {});
+                    },
+                  ),
+                ),
+                _checklistController.text == ""
+                    ? Container(
+                        width: _widthAddButton,
+                        padding: const EdgeInsets.all(10),
+                        child: ElevatedButton(
+                          onPressed: null,
+                          child: Text('追加'),
+                        ),
+                      )
+                    : Container(
+                        width: _widthAddButton,
+                        padding: const EdgeInsets.all(10),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              todoList.add(_checklistController.text);
+                              _checklistController.text = "";
+                            });
+                          },
+                          child: Text('追加'),
+                        ),
+                      ),
+              ],
+            ),
+            Row(
+              children: [
+                Container(
+                  width: _widthItemTitle,
+                  padding: const EdgeInsets.all(10),
+                  child: Text(""),
+                ),
+                Container(
+                  width: _widthItem,
+                  height: 500,
+                  padding: const EdgeInsets.all(10),
+                  child: ListView.builder(
+                    itemCount: todoList.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: [
+                          Container(
+                            width: _widthItem - _widthTrashIcon - 20,
+                            child: ListTile(
+                              title: Text(todoList[index]),
+                            ),
+                          ),
+                          Container(
+                            width: _widthTrashIcon,
+                            child: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  todoList.removeAt(index);
+                                });
+                              },
+                              // 表示アイコン
+                              icon: Icon(Icons.delete_forever),
+                              // アイコン色
+                              // color: Colors.pink,
+                              // サイズ
+                              // iconSize: 64,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ],

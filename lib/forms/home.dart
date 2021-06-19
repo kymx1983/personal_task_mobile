@@ -1,116 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:personal_task_mobile/common/common.dart';
+import 'package:personal_task_mobile/controllers/task_controller.dart';
 import 'package:personal_task_mobile/models/task.dart';
 import "package:intl/intl.dart";
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Home extends StatefulWidget {
-  // Home({Key key, this.title}) : super(key: key);
-  // final String title;
 
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-
   List<Task> tasks = [];
-
-  bool _isDay = true;
-  bool _isWeek = false;
-
-  String _type = 'favorite';
-
-  void _handleRadio(String e) {
-    setState(() {
-      print(e);
-      String _type = 'week';
-    });
-  }
-
-  IconData _changeIcon(String e) {
-    IconData icon;
-    switch (e) {
-      case 'thumb_up':
-        icon = Icons.thumb_up;
-        break;
-      case 'favorite':
-        icon = Icons.favorite;
-        break;
-      default:
-        icon = Icons.thumb_up;
-    }
-    return icon;
-  }
 
   // 初期処理
   @override
   void initState() {
     super.initState();
 
-    Task task = Task.init();
-
-    // テストデータ作成
-    // 1件目
-    task = Task.init();
-    task.title = "1件目のタスク";
-    tasks.add(task);
-
-    // 2件目
-    task = Task.init();
-    task.title = "2件目のタスク";
-    tasks.add(task);
-
-    // 3件目
-    task = Task.init();
-    task.title = "3件目のタスク";
-    tasks.add(task);
-
-    // 4件目
-    task = Task.init();
-    task.title = "4件目のタスク";
-    tasks.add(task);
-
-    // 5件目
-    task = Task.init();
-    task.title = "5件目のタスク";
-    tasks.add(task);
-
-    // 6件目
-    task = Task.init();
-    task.title = "6件目のタスク";
-    tasks.add(task);
-
-    // 7件目
-    task = Task.init();
-    task.title = "7件目のタスク";
-    tasks.add(task);
-
-    // 8件目
-    task = Task.init();
-    task.title = "8件目のタスク";
-    tasks.add(task);
-
-    // 9件目
-    task = Task.init();
-    task.title = "9件目のタスク";
-    tasks.add(task);
-
-    // 10件目
-    task = Task.init();
-    task.title = "10件目のタスク";
-    tasks.add(task);
-
-    // 11件目
-    task = Task.init();
-    task.title = "11件目のタスク";
-    tasks.add(task);
-
+    Future(() async {
+      tasks = await TaskController.readTasks();
+      setState(() {});
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {
-
     // サイズ関連
     final _size = MediaQuery.of(context).size;
 
@@ -118,112 +35,103 @@ class _HomeState extends State<Home> {
     final double _widthTask = _size.width - Common.widthIcon - Common.widthIcon;
 
     return Scaffold(
-        body: Container(
-          child : SingleChildScrollView(
-            child: Column(
-              children: [
-                for (Task task in tasks)
-                  Row(
-                    children: [
-                      Container(
-                        width: _widthTask,
-                        child: CheckboxListTile(
-                          activeColor: Colors.grey,
-                          title: Text(task.title,
-                              style: TextStyle(
-                                  decoration: task.isCheck
-                                      ? TextDecoration.lineThrough
-                                      : TextDecoration.none,
-                                  color: task.isCheck ? Colors.grey : Colors.black)),
-                          subtitle: Text(
-
-                            "due:" + DateFormat(Common.formatDateOnly).format(task.due),
+      body: Container(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              for (Task task in tasks)
+                Row(
+                  children: [
+                    Container(
+                      width: _widthTask,
+                      child: CheckboxListTile(
+                        activeColor: Colors.grey,
+                        title: Text(task.title,
                             style: TextStyle(
                                 decoration: task.isCheck
                                     ? TextDecoration.lineThrough
                                     : TextDecoration.none,
-                                color: task.isCheck ? Colors.grey : Colors.black45),
-                          ),
-                          controlAffinity: ListTileControlAffinity.leading,
-                          value: task.isCheck,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              task.isCheck = value!;
-                            });
-                          },
+                                color:
+                                    task.isCheck ? Colors.grey : Colors.black)),
+                        subtitle: Text(
+                          "due:" +
+                              DateFormat(Common.formatDateOnly)
+                                  .format(task.targetDate),
+                          style: TextStyle(
+                              decoration: task.isCheck
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                              color:
+                                  task.isCheck ? Colors.grey : Colors.black45),
                         ),
+                        controlAffinity: ListTileControlAffinity.leading,
+                        value: task.isCheck,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            task.isCheck = value!;
+                          });
+                        },
                       ),
-                      Container(
-                        width: Common.widthIcon,
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.bookmark,
-                            color: task.isCheck
-                                ? Colors.grey
-                                : task.isDoing
-                                ? Colors.blue
-                                : Colors.grey,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              task.isDoing = !task.isDoing;
-                            });
-                          },
+                    ),
+                    Container(
+                      width: Common.widthIcon,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.bookmark,
+                          color: task.isCheck
+                              ? Colors.grey
+                              : task.isDoing
+                                  ? Colors.blue
+                                  : Colors.grey,
                         ),
+                        onPressed: () {
+                          setState(() {
+                            task.isDoing = !task.isDoing;
+                          });
+                        },
                       ),
-                      Container(
-                        width: Common.widthIcon,
-                        child: IconButton(
-                          icon: Icon(Icons.more_vert),
-                          onPressed: () {
-                            setState(() {
-                              print("ボタンが押されました");
-                            });
-                          },
-                        ),
+                    ),
+                    Container(
+                      width: Common.widthIcon,
+                      child: IconButton(
+                        icon: Icon(Icons.more_vert),
+                        onPressed: () {
+                          setState(() {
+                            print("ボタンが押されました");
+                          });
+                        },
                       ),
-                    ],
-                  ),
-                // Row(
-                //   children: [
-                //     Container(
-                //       width: 100,
-                //       padding: const EdgeInsets.all(10),
-                //       child:  Text("サイクル"),
-                //     ),
-                //
-                //     Container(
-                //       width: 300,
-                //       padding: const EdgeInsets.all(10),
-                //       child: Column(
-                //         children: [
-                //           new Radio(
-                //             activeColor: Colors.blue,
-                //             value: 'thumb_up',
-                //             groupValue: _type,
-                //             onChanged: _handleRadio,
-                //           ),
-                //           new Radio(
-                //             activeColor: Colors.orange,
-                //             value: 'favorite',
-                //             groupValue: _type,
-                //             onChanged: _handleRadio,
-                //           ),
-                //           new Radio(
-                //             activeColor: Colors.green,
-                //             value: 'week',
-                //             groupValue: _type,
-                //             onChanged: _handleRadio,
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ],
-                // ),
-              ],
-            ),
+                    ),
+                  ],
+                ),
+              Container(
+                width: 200,
+                padding: const EdgeInsets.all(10),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    // This example uses the Google Books API to search for books about http.
+                    // https://developers.google.com/books/docs/overview
+                    var url =
+                    Uri.https('www.googleapis.com', '/books/v1/volumes', {'q': '{http}'});
+
+                    // Await the http get response, then decode the json-formatted response.
+                    var response = await http.get(url);
+                    if (response.statusCode == 200) {
+                      var jsonResponse =
+                      jsonDecode(response.body) as Map<String, dynamic>;
+                      var itemCount = jsonResponse['totalItems'];
+                      print('Number of books about http: $itemCount.');
+                    } else {
+                      print('Request failed with status: ${response.statusCode}.');
+                    }
+                  },
+                  child: Text('追加'),
+                ),
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }

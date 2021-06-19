@@ -3,8 +3,6 @@ import 'package:personal_task_mobile/common/common.dart';
 import "package:intl/intl.dart";
 
 class Routine extends StatefulWidget {
-  // Routine({Key key, this.title}) : super(key: key);
-  // final String title;
 
   @override
   _RoutineState createState() => _RoutineState();
@@ -32,6 +30,8 @@ class _RoutineState extends State<Routine> {
 
   @override
   void initState() {
+    super.initState();
+
     for (int i = 0; i < _weekOrg.length; i++) {
       _weeks
         ..add(DropdownMenuItem(
@@ -67,33 +67,6 @@ class _RoutineState extends State<Routine> {
 
     // 項目の横幅（画面横幅 - 項目名の横幅 - マージン）
     final double _widthItem = _size.width - _widthItemTitle - 20;
-
-    bool _isDay = true;
-    bool _isWeek = false;
-
-    String _type = 'favorite';
-
-    void _handleRadio(String e) {
-      setState(() {
-        print(e);
-        String _type = 'week';
-      });
-    }
-
-    IconData _changeIcon(String e) {
-      IconData icon;
-      switch (e) {
-        case 'thumb_up':
-          icon = Icons.thumb_up;
-          break;
-        case 'favorite':
-          icon = Icons.favorite;
-          break;
-        default:
-          icon = Icons.thumb_up;
-      }
-      return icon;
-    }
 
     return Scaffold(
       // appBar: AppBar(

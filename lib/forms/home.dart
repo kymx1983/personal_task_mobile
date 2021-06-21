@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_task_mobile/common/common.dart';
 import 'package:personal_task_mobile/controllers/task_controller.dart';
+import 'package:personal_task_mobile/forms/entry.dart';
 import 'package:personal_task_mobile/models/task.dart';
 import "package:intl/intl.dart";
 import 'package:http/http.dart' as http;
@@ -104,33 +105,21 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-              Container(
-                width: 200,
-                padding: const EdgeInsets.all(10),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    // This example uses the Google Books API to search for books about http.
-                    // https://developers.google.com/books/docs/overview
-                    var url =
-                    Uri.https('www.googleapis.com', '/books/v1/volumes', {'q': '{http}'});
-
-                    // Await the http get response, then decode the json-formatted response.
-                    var response = await http.get(url);
-                    if (response.statusCode == 200) {
-                      var jsonResponse =
-                      jsonDecode(response.body) as Map<String, dynamic>;
-                      var itemCount = jsonResponse['totalItems'];
-                      print('Number of books about http: $itemCount.');
-                    } else {
-                      print('Request failed with status: ${response.statusCode}.');
-                    }
-                  },
-                  child: Text('追加'),
-                ),
-              ),
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // "push"で新規画面に遷移
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) {
+              // 遷移先の画面としてリスト追加画面を指定
+              return Entry();
+            }),
+          );
+        },
+        child: Icon(Icons.add),
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:personal_task_mobile/common/common.dart';
 import "package:intl/intl.dart";
+import 'package:personal_task_mobile/controllers/task_controller.dart';
+import 'package:personal_task_mobile/models/task.dart';
 
 class Entry extends StatefulWidget {
   @override
@@ -10,7 +12,6 @@ class Entry extends StatefulWidget {
 enum SingingCharacter { day, week, month, target }
 
 class _EntryState extends State<Entry> {
-
   // 日付の指定を行うかどうかのフラグ
   bool _isDate = false;
 
@@ -23,8 +24,10 @@ class _EntryState extends State<Entry> {
   // チェックリスト
   List<String> todoList = [];
 
-  // チェックリストテキストのコントローラ
+  // コントローラ
+  var _TaskController = TextEditingController();
   var _checklistController = TextEditingController();
+  var _memoController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +46,36 @@ class _EntryState extends State<Entry> {
     final double _widthTrashIcon = 20;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text("タスク追加"),
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center, // 中央寄せ
           crossAxisAlignment: CrossAxisAlignment.start, // 左寄せ
           children: <Widget>[
+            Container(
+              width: _widthAddButton,
+              padding: const EdgeInsets.all(10),
+              child: ElevatedButton(
+                onPressed: () async {
+                  print("ボタンが押されました");
+                  Task task = Task.init();
+                  task.userId = 1;
+                  task.title = _TaskController.text;
+                  task.memo = _memoController.text;
+                  task.status = 0;
+                  int taskId = await TaskController.createTask(task);
+                  print(taskId);
+                  setState(() {
+                    _TaskController.text = "";
+                    _memoController.text = "";
+                    _checklistController.text = "";
+                  });
+                },
+                child: Text('登録'),
+              ),
+            ),
             Row(
               children: [
                 Container(
@@ -64,12 +92,10 @@ class _EntryState extends State<Entry> {
                     maxLength: 50,
                     obscureText: false,
                     maxLines: 1,
-                    decoration: const InputDecoration(
-                        // hintText: "タスクを入力",
-                        // labelText: "タスク",
-                        ),
-                    //パスワード
-                    // onChanged: _handleText,
+                    controller: _TaskController,
+                    onChanged: (String value) {
+                      setState(() {});
+                    },
                   ),
                 ),
               ],
@@ -178,6 +204,7 @@ class _EntryState extends State<Entry> {
                     enabled: true,
                     obscureText: false,
                     maxLines: 5,
+                    controller: _memoController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -191,6 +218,9 @@ class _EntryState extends State<Entry> {
                       ),
                       // onChanged: _handleText,
                     ),
+                    onChanged: (String value) {
+                      setState(() {});
+                    },
                   ),
                 ),
               ],

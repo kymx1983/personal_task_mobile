@@ -66,16 +66,12 @@ class _MyHomePageState extends State<MyHomePage> {
       type: BottomNavigationBarType.fixed,
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
+          icon: Icon(Icons.check_box_outlined),
+          label: 'タスク',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.calendar_today),
           label: 'ルーティン',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.add),
-          label: '追加',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.bookmark),
@@ -100,11 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
           case FooterItems.info:
             setState(() {
               _mainWidget = new Ticket();
-            });
-            break;
-          case FooterItems.entry:
-            setState(() {
-              _mainWidget = new Entry();
             });
             break;
           case FooterItems.routine:

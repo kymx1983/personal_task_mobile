@@ -48,6 +48,7 @@ class _EntryState extends State<Entry> {
     return Scaffold(
       appBar: AppBar(
         title: Text("タスク追加"),
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -84,7 +85,7 @@ class _EntryState extends State<Entry> {
                   padding: const EdgeInsets.all(10),
                   child: ElevatedButton(
                     onPressed: () async {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(Task.init());
                     },
                     child: Text('キャンセル'),
                   ),

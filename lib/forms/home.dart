@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
     final _size = MediaQuery.of(context).size;
 
     // タスクの横幅（画面横幅 - アイコン横幅 - アイコン横幅）
-    final double _widthTask = _size.width - Common.widthIcon - Common.widthIcon;
+    final double _widthTask = _size.width - Common.widthIcon;
 
     return Scaffold(
       body: Container(
@@ -84,27 +84,11 @@ class _HomeState extends State<Home> {
                           width: Common.widthIcon,
                           child: IconButton(
                             icon: Icon(
-                              Icons.bookmark,
-                              color: tasks[index].isCheck
-                                  ? Colors.grey
-                                  : tasks[index].isDoing
-                                  ? Colors.blue
-                                  : Colors.grey,
+                              Icons.info_outline,
                             ),
                             onPressed: () {
                               setState(() {
                                 tasks[index].isDoing = !tasks[index].isDoing;
-                              });
-                            },
-                          ),
-                        ),
-                        Container(
-                          width: Common.widthIcon,
-                          child: IconButton(
-                            icon: Icon(Icons.more_vert),
-                            onPressed: () {
-                              setState(() {
-                                print("ボタンが押されました");
                               });
                             },
                           ),
@@ -119,14 +103,20 @@ class _HomeState extends State<Home> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async{
           // "push"で新規画面に遷移
-          Navigator.of(context).push(
+          Task task = await Navigator.of(context).push(
             MaterialPageRoute(builder: (context) {
               // 遷移先の画面としてリスト追加画面を指定
               return Entry();
             }),
           );
+
+          if(task.title != ""){
+            setState(() {
+              tasks.add(task);
+            });
+          }
         },
         child: Icon(Icons.add),
       ),

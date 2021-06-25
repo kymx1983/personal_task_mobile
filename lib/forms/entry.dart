@@ -54,27 +54,42 @@ class _EntryState extends State<Entry> {
           mainAxisAlignment: MainAxisAlignment.center, // 中央寄せ
           crossAxisAlignment: CrossAxisAlignment.start, // 左寄せ
           children: <Widget>[
-            Container(
-              width: _widthAddButton,
-              padding: const EdgeInsets.all(10),
-              child: ElevatedButton(
-                onPressed: () async {
-                  print("ボタンが押されました");
-                  Task task = Task.init();
-                  task.userId = 1;
-                  task.title = _TaskController.text;
-                  task.memo = _memoController.text;
-                  task.status = 0;
-                  int taskId = await TaskController.createTask(task);
-                  print(taskId);
-                  setState(() {
-                    _TaskController.text = "";
-                    _memoController.text = "";
-                    _checklistController.text = "";
-                  });
-                },
-                child: Text('登録'),
-              ),
+            Row(
+              children: [
+                Container(
+                  width: _widthAddButton,
+                  padding: const EdgeInsets.all(10),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      print("ボタンが押されました");
+                      Task task = Task.init();
+                      task.userId = 1;
+                      task.title = _TaskController.text;
+                      task.memo = _memoController.text;
+                      task.status = 0;
+                      int taskId = await TaskController.createTask(task);
+                      setState(() {
+                        _TaskController.text = "";
+                        _memoController.text = "";
+                        _checklistController.text = "";
+                      });
+
+                      Navigator.of(context).pop(task);
+                    },
+                    child: Text('登録'),
+                  ),
+                ),
+                Container(
+                  width: 130,
+                  padding: const EdgeInsets.all(10),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('キャンセル'),
+                  ),
+                ),
+              ],
             ),
             Row(
               children: [

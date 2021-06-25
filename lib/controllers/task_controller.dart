@@ -38,7 +38,5 @@ class TaskController {
 
     var data = json.decode(response.body);
     return data['data']['id'];
-
-    return 0;
   }
 }

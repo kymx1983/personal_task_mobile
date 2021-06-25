@@ -40,71 +40,80 @@ class _HomeState extends State<Home> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              for (Task task in tasks)
-                Row(
-                  children: [
-                    Container(
-                      width: _widthTask,
-                      child: CheckboxListTile(
-                        activeColor: Colors.grey,
-                        title: Text(task.title,
-                            style: TextStyle(
-                                decoration: task.isCheck
-                                    ? TextDecoration.lineThrough
-                                    : TextDecoration.none,
-                                color:
-                                    task.isCheck ? Colors.grey : Colors.black)),
-                        subtitle: Text(
-                          "due:" +
-                              DateFormat(Common.formatDateOnly)
-                                  .format(task.targetDate),
-                          style: TextStyle(
-                              decoration: task.isCheck
-                                  ? TextDecoration.lineThrough
-                                  : TextDecoration.none,
-                              color:
-                                  task.isCheck ? Colors.grey : Colors.black45),
+              Container(
+                width: _size.width,
+                height: _size.height,
+                padding: const EdgeInsets.all(10),
+                child: ListView.builder(
+                  itemCount: tasks.length,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      children: [
+                        Container(
+                          width: _widthTask - 20,
+                          child: CheckboxListTile(
+                            activeColor: Colors.grey,
+                            title: Text(tasks[index].title,
+                                style: TextStyle(
+                                    decoration: tasks[index].isCheck
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none,
+                                    color:
+                                    tasks[index].isCheck ? Colors.grey : Colors.black)),
+                            subtitle: Text(
+                              "due:" +
+                                  DateFormat(Common.formatDateOnly)
+                                      .format(tasks[index].targetDate),
+                              style: TextStyle(
+                                  decoration: tasks[index].isCheck
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none,
+                                  color:
+                                  tasks[index].isCheck ? Colors.grey : Colors.black45),
+                            ),
+                            controlAffinity: ListTileControlAffinity.leading,
+                            value: tasks[index].isCheck,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                tasks[index].isCheck = value!;
+                              });
+                            },
+                          ),
                         ),
-                        controlAffinity: ListTileControlAffinity.leading,
-                        value: task.isCheck,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            task.isCheck = value!;
-                          });
-                        },
-                      ),
-                    ),
-                    Container(
-                      width: Common.widthIcon,
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.bookmark,
-                          color: task.isCheck
-                              ? Colors.grey
-                              : task.isDoing
+                        Container(
+                          width: Common.widthIcon,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.bookmark,
+                              color: tasks[index].isCheck
+                                  ? Colors.grey
+                                  : tasks[index].isDoing
                                   ? Colors.blue
                                   : Colors.grey,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                tasks[index].isDoing = !tasks[index].isDoing;
+                              });
+                            },
+                          ),
                         ),
-                        onPressed: () {
-                          setState(() {
-                            task.isDoing = !task.isDoing;
-                          });
-                        },
-                      ),
-                    ),
-                    Container(
-                      width: Common.widthIcon,
-                      child: IconButton(
-                        icon: Icon(Icons.more_vert),
-                        onPressed: () {
-                          setState(() {
-                            print("ボタンが押されました");
-                          });
-                        },
-                      ),
-                    ),
-                  ],
+                        Container(
+                          width: Common.widthIcon,
+                          child: IconButton(
+                            icon: Icon(Icons.more_vert),
+                            onPressed: () {
+                              setState(() {
+                                print("ボタンが押されました");
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
+              ),
             ],
           ),
         ),

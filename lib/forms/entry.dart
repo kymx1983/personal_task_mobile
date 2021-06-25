@@ -5,6 +5,9 @@ import 'package:personal_task_mobile/controllers/task_controller.dart';
 import 'package:personal_task_mobile/models/task.dart';
 
 class Entry extends StatefulWidget {
+  final int? mode;
+  Entry({key: Key, this.mode});
+
   @override
   _EntryState createState() => _EntryState();
 }
@@ -25,7 +28,7 @@ class _EntryState extends State<Entry> {
   List<String> todoList = [];
 
   // コントローラ
-  var _TaskController = TextEditingController();
+  var _taskController = TextEditingController();
   var _checklistController = TextEditingController();
   var _memoController = TextEditingController();
 
@@ -45,6 +48,8 @@ class _EntryState extends State<Entry> {
 
     final double _widthTrashIcon = 20;
 
+    int? mode = widget.mode;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("タスク追加"),
@@ -63,14 +68,15 @@ class _EntryState extends State<Entry> {
                   child: ElevatedButton(
                     onPressed: () async {
                       print("ボタンが押されました");
+                      print(mode);
                       Task task = Task.init();
                       task.userId = 1;
-                      task.title = _TaskController.text;
+                      task.title = _taskController.text;
                       task.memo = _memoController.text;
                       task.status = 0;
                       int taskId = await TaskController.createTask(task);
                       setState(() {
-                        _TaskController.text = "";
+                        _taskController.text = "";
                         _memoController.text = "";
                         _checklistController.text = "";
                       });
@@ -108,7 +114,7 @@ class _EntryState extends State<Entry> {
                     maxLength: 50,
                     obscureText: false,
                     maxLines: 1,
-                    controller: _TaskController,
+                    controller: _taskController,
                     onChanged: (String value) {
                       setState(() {});
                     },

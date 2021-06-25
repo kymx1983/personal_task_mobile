@@ -86,10 +86,22 @@ class _HomeState extends State<Home> {
                             icon: Icon(
                               Icons.info_outline,
                             ),
-                            onPressed: () {
-                              setState(() {
-                                tasks[index].isDoing = !tasks[index].isDoing;
-                              });
+                            onPressed: () async{
+                              // "push"で新規画面に遷移
+                              Task task = await Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) {
+                                  // 遷移先の画面としてリスト追加画面を指定
+                                  return Entry(mode: 2);
+                                }),
+                              );
+
+                              print(task.title);
+
+                              // if(task.title != ""){
+                              //   setState(() {
+                              //     tasks.add(task);
+                              //   });
+                              // }
                             },
                           ),
                         ),
@@ -108,7 +120,7 @@ class _HomeState extends State<Home> {
           Task task = await Navigator.of(context).push(
             MaterialPageRoute(builder: (context) {
               // 遷移先の画面としてリスト追加画面を指定
-              return Entry();
+              return Entry(mode: 1);
             }),
           );
 

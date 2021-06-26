@@ -4,11 +4,8 @@ import 'package:personal_task_mobile/controllers/task_controller.dart';
 import 'package:personal_task_mobile/forms/entry.dart';
 import 'package:personal_task_mobile/models/task.dart';
 import "package:intl/intl.dart";
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class Home extends StatefulWidget {
-
   @override
   _HomeState createState() => _HomeState();
 }
@@ -58,8 +55,9 @@ class _HomeState extends State<Home> {
                                     decoration: tasks[index].isCheck
                                         ? TextDecoration.lineThrough
                                         : TextDecoration.none,
-                                    color:
-                                    tasks[index].isCheck ? Colors.grey : Colors.black)),
+                                    color: tasks[index].isCheck
+                                        ? Colors.grey
+                                        : Colors.black)),
                             subtitle: Text(
                               "due:" +
                                   DateFormat(Common.formatDateOnly)
@@ -68,8 +66,9 @@ class _HomeState extends State<Home> {
                                   decoration: tasks[index].isCheck
                                       ? TextDecoration.lineThrough
                                       : TextDecoration.none,
-                                  color:
-                                  tasks[index].isCheck ? Colors.grey : Colors.black45),
+                                  color: tasks[index].isCheck
+                                      ? Colors.grey
+                                      : Colors.black45),
                             ),
                             controlAffinity: ListTileControlAffinity.leading,
                             value: tasks[index].isCheck,
@@ -86,22 +85,25 @@ class _HomeState extends State<Home> {
                             icon: Icon(
                               Icons.info_outline,
                             ),
-                            onPressed: () async{
+                            onPressed: () async {
                               // "push"で新規画面に遷移
                               Task task = await Navigator.of(context).push(
                                 MaterialPageRoute(builder: (context) {
                                   // 遷移先の画面としてリスト追加画面を指定
-                                  return Entry(mode: 2);
+                                  return Entry(
+                                    mode: 2,
+                                    taskId: tasks[index].id,
+                                  );
                                 }),
                               );
 
                               print(task.title);
 
-                              // if(task.title != ""){
-                              //   setState(() {
-                              //     tasks.add(task);
-                              //   });
-                              // }
+                              if(task.id != 0){
+                                setState(() {
+                                  tasks[index] = task;
+                                });
+                              }
                             },
                           ),
                         ),
@@ -115,16 +117,19 @@ class _HomeState extends State<Home> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async{
+        onPressed: () async {
           // "push"で新規画面に遷移
           Task task = await Navigator.of(context).push(
             MaterialPageRoute(builder: (context) {
               // 遷移先の画面としてリスト追加画面を指定
-              return Entry(mode: 1);
+              return Entry(
+                mode: 1,
+                taskId: 0,
+              );
             }),
           );
 
-          if(task.title != ""){
+          if (task.title != "") {
             setState(() {
               tasks.add(task);
             });

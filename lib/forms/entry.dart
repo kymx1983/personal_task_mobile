@@ -6,7 +6,8 @@ import 'package:personal_task_mobile/models/task.dart';
 
 class Entry extends StatefulWidget {
   final int? mode;
-  Entry({key: Key, this.mode});
+  final int? taskId;
+  Entry({key: Key, this.mode, this.taskId});
 
   @override
   _EntryState createState() => _EntryState();
@@ -32,6 +33,46 @@ class _EntryState extends State<Entry> {
   var _checklistController = TextEditingController();
   var _memoController = TextEditingController();
 
+  // パラメータを取得
+  int? _mode = 0;
+  int? _taskId = 9;
+  
+  // タスク
+  Task task = Task.init();
+
+  // 初期処理
+  @override
+  void initState() {
+    super.initState();
+
+    // パラメータを取得
+    _mode = widget.mode;
+    _taskId = widget.taskId;
+
+    print("初期処理開始");
+
+    if(_mode == 2){
+      print("編集処理開始");
+      Future(() async {
+        task = await TaskController.showTasks(_taskId!);
+        setState(() {
+          _taskController.text = task.title;
+          _memoController.text = task.memo;
+        });
+
+        print(task.title);
+      });
+
+
+      print("編集処理終了");
+    }
+
+    print("初期処理終了");
+
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     // サイズ関連
@@ -48,7 +89,6 @@ class _EntryState extends State<Entry> {
 
     final double _widthTrashIcon = 20;
 
-    int? mode = widget.mode;
 
     return Scaffold(
       appBar: AppBar(
@@ -67,19 +107,18 @@ class _EntryState extends State<Entry> {
                   padding: const EdgeInsets.all(10),
                   child: ElevatedButton(
                     onPressed: () async {
-                      print("ボタンが押されました");
-                      print(mode);
                       Task task = Task.init();
                       task.userId = 1;
                       task.title = _taskController.text;
                       task.memo = _memoController.text;
                       task.status = 0;
-                      int taskId = await TaskController.createTask(task);
-                      setState(() {
-                        _taskController.text = "";
-                        _memoController.text = "";
-                        _checklistController.text = "";
-                      });
+
+                      if (_mode == 1) {
+                        task.id = await TaskController.createTask(task);
+                      } else if (_mode == 2) {
+                        task.id = _taskId!;
+                        await TaskController.updateTask(task);
+                      }
 
                       Navigator.of(context).pop(task);
                     },

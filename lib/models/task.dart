@@ -11,6 +11,21 @@ class Task{
 
   Task.init();
 
+  static Task setData(dynamic data) {
+
+    Task task = Task.init();
+
+    task.id =  data['id'];
+    task.userId =  data['user_id'];
+    task.title =  data['title'];
+    // task.targetDate =  new DateTime(data['target_date']);
+    task.memo =  data['memo'];
+    task.status =  data['status'];
+
+    return task;
+
+  }
+
   static List<Task> setList(Map<String,dynamic> jsonList) {
     List<Task> list = [];
 

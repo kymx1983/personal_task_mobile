@@ -6,8 +6,8 @@ class Task{
   String memo = "";
   int status = 0;
 
-  bool isCheck = false;
-  bool isDoing = false;
+  bool isDone = false;
+  bool isDelete = false;
 
   Task.init();
 

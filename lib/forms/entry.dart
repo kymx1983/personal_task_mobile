@@ -7,6 +7,7 @@ import 'package:personal_task_mobile/models/task.dart';
 class Entry extends StatefulWidget {
   final int? mode;
   final int? taskId;
+
   Entry({key: Key, this.mode, this.taskId});
 
   @override
@@ -36,7 +37,7 @@ class _EntryState extends State<Entry> {
   // パラメータを取得
   int? _mode = 0;
   int? _taskId = 9;
-  
+
   // タスク
   Task task = Task.init();
 
@@ -51,7 +52,7 @@ class _EntryState extends State<Entry> {
 
     print("初期処理開始");
 
-    if(_mode == 2){
+    if (_mode == 2) {
       print("編集処理開始");
       Future(() async {
         task = await TaskController.showTasks(_taskId!);
@@ -63,15 +64,11 @@ class _EntryState extends State<Entry> {
         print(task.title);
       });
 
-
       print("編集処理終了");
     }
 
     print("初期処理終了");
-
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +85,6 @@ class _EntryState extends State<Entry> {
     final double _widthAddButton = 90;
 
     final double _widthTrashIcon = 20;
-
 
     return Scaffold(
       appBar: AppBar(
@@ -135,6 +131,20 @@ class _EntryState extends State<Entry> {
                     child: Text('キャンセル'),
                   ),
                 ),
+                (_mode == 2)
+                    ? Container(
+                        width: 100,
+                        padding: const EdgeInsets.all(10),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            await TaskController.delete(_taskId!);
+                            task.isDelete = true;
+                            Navigator.of(context).pop(task);
+                          },
+                          child: Text('削除'),
+                        ),
+                      )
+                    : Text(""),
               ],
             ),
             Row(

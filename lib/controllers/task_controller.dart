@@ -75,4 +75,21 @@ class TaskController {
     var data = json.decode(response.body);
     return data['data']['id'];
   }
+
+  static Future<bool> delete(int taskId) async {
+    var url = Uri.http(
+      'localhost:3000',
+      '/tasks/delete',
+    );
+
+    var response = await http.post(
+      url,
+      body: {
+        "id": taskId.toString(),
+      },
+    );
+
+    var data = json.decode(response.body);
+    return true;
+  }
 }

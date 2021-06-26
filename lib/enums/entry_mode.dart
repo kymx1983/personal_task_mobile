@@ -1,0 +1,4 @@
+enum EntryMode {
+  create,
+  update,
+}

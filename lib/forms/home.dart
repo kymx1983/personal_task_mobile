@@ -52,10 +52,10 @@ class _HomeState extends State<Home> {
                             activeColor: Colors.grey,
                             title: Text(tasks[index].title,
                                 style: TextStyle(
-                                    decoration: tasks[index].isCheck
+                                    decoration: tasks[index].isDone
                                         ? TextDecoration.lineThrough
                                         : TextDecoration.none,
-                                    color: tasks[index].isCheck
+                                    color: tasks[index].isDone
                                         ? Colors.grey
                                         : Colors.black)),
                             subtitle: Text(
@@ -63,18 +63,18 @@ class _HomeState extends State<Home> {
                                   DateFormat(Common.formatDateOnly)
                                       .format(tasks[index].targetDate),
                               style: TextStyle(
-                                  decoration: tasks[index].isCheck
+                                  decoration: tasks[index].isDone
                                       ? TextDecoration.lineThrough
                                       : TextDecoration.none,
-                                  color: tasks[index].isCheck
+                                  color: tasks[index].isDone
                                       ? Colors.grey
                                       : Colors.black45),
                             ),
                             controlAffinity: ListTileControlAffinity.leading,
-                            value: tasks[index].isCheck,
+                            value: tasks[index].isDone,
                             onChanged: (bool? value) {
                               setState(() {
-                                tasks[index].isCheck = value!;
+                                tasks[index].isDone = value!;
                               });
                             },
                           ),
@@ -99,7 +99,11 @@ class _HomeState extends State<Home> {
 
                               print(task.title);
 
-                              if(task.id != 0){
+                              if(task.isDelete) {
+                                setState(() {
+                                  tasks.removeAt(index);
+                                });
+                              } else if(task.id != 0){
                                 setState(() {
                                   tasks[index] = task;
                                 });

@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:personal_task_mobile/common/common.dart';
 import 'dart:convert';
 
 import 'package:personal_task_mobile/models/task.dart';
@@ -21,7 +22,7 @@ class TaskController {
 
   static Future<Task> showTasks(int taskId) async {
     var url = Uri.http(
-      'localhost:3000',
+      Common.domain,
       '/tasks/show/' + taskId.toString(),
     );
 
@@ -35,7 +36,7 @@ class TaskController {
 
   static Future<int> createTask(Task task) async {
     var url = Uri.http(
-      'localhost:3000',
+      Common.domain,
       '/tasks/create',
     );
 
@@ -56,7 +57,7 @@ class TaskController {
 
   static Future<int> updateTask(Task task) async {
     var url = Uri.http(
-      'localhost:3000',
+      Common.domain,
       '/tasks/update',
     );
 
@@ -78,7 +79,7 @@ class TaskController {
 
   static Future<bool> delete(int taskId) async {
     var url = Uri.http(
-      'localhost:3000',
+      Common.domain,
       '/tasks/delete',
     );
 

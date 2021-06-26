@@ -6,4 +6,7 @@ class Common {
   // 日付フォーマット（日付のみ）
   static final String formatDateOnly = "yyyy/MM/dd";
 
+  // サーバの接続先
+  static final String domain = "localhost:3000";
+
 }

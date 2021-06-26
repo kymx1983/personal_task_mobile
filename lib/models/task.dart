@@ -1,3 +1,6 @@
+import "package:intl/intl.dart";
+import 'package:personal_task_mobile/common/common.dart';
+
 class Task{
   int id = 0;
   int userId = 0;
@@ -15,12 +18,17 @@ class Task{
 
     Task task = Task.init();
 
+    print(data['target_date']);
+
     task.id =  data['id'];
     task.userId =  data['user_id'];
     task.title =  data['title'];
-    // task.targetDate =  new DateTime(data['target_date']);
+    task.targetDate =  DateTime.parse(data['target_date']);
+
     task.memo =  data['memo'];
     task.status =  data['status'];
+
+    print(task.targetDate);
 
     return task;
 
@@ -35,7 +43,7 @@ class Task{
       task.id =  data['id'];
       task.userId =  data['user_id'];
       task.title =  data['title'];
-      // task.targetDate =  new DateTime(data['target_date']);
+      task.targetDate =  DateTime.parse(data['target_date']);
       task.memo =  data['memo'];
       task.status =  data['status'];
 

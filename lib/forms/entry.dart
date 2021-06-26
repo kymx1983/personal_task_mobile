@@ -61,6 +61,17 @@ class _EntryState extends State<Entry> {
         setState(() {
           _taskController.text = task.title;
           _memoController.text = task.memo;
+          _date = new DateTime(
+            task.targetDate.year,
+            task.targetDate.month,
+            task.targetDate.day,
+          );
+          _time = new TimeOfDay(
+            hour: task.targetDate.hour,
+            minute: task.targetDate.minute,
+          );
+
+          print(_date);
         });
 
         print(task.title);
@@ -75,9 +86,7 @@ class _EntryState extends State<Entry> {
   @override
   Widget build(BuildContext context) {
     // サイズ関連
-    final _size = MediaQuery
-        .of(context)
-        .size;
+    final _size = MediaQuery.of(context).size;
 
     // 項目名の横幅
     final double _widthItemTitle = 80;
@@ -113,6 +122,13 @@ class _EntryState extends State<Entry> {
                       task.memo = _memoController.text;
                       task.status = 0;
 
+                      print(_date);
+                      print(_time);
+
+                      task.targetDate = new DateTime(_date.year, _date.month,
+                          _date.day, _time.hour, _time.minute);
+                      print(task.targetDate);
+
                       if (_mode == EntryMode.create) {
                         task.id = await TaskController.createTask(task);
                       } else if (_mode == EntryMode.update) {
@@ -137,17 +153,17 @@ class _EntryState extends State<Entry> {
                 ),
                 (_mode == EntryMode.update)
                     ? Container(
-                  width: 100,
-                  padding: const EdgeInsets.all(10),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await TaskController.delete(_taskId!);
-                      task.isDelete = true;
-                      Navigator.of(context).pop(task);
-                    },
-                    child: Text('削除'),
-                  ),
-                )
+                        width: 100,
+                        padding: const EdgeInsets.all(10),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            await TaskController.delete(_taskId!);
+                            task.isDelete = true;
+                            Navigator.of(context).pop(task);
+                          },
+                          child: Text('削除'),
+                        ),
+                      )
                     : Text(""),
               ],
             ),
@@ -319,26 +335,26 @@ class _EntryState extends State<Entry> {
                 ),
                 _checklistController.text == ""
                     ? Container(
-                  width: _widthAddButton,
-                  padding: const EdgeInsets.all(10),
-                  child: ElevatedButton(
-                    onPressed: null,
-                    child: Text('追加'),
-                  ),
-                )
+                        width: _widthAddButton,
+                        padding: const EdgeInsets.all(10),
+                        child: ElevatedButton(
+                          onPressed: null,
+                          child: Text('追加'),
+                        ),
+                      )
                     : Container(
-                  width: _widthAddButton,
-                  padding: const EdgeInsets.all(10),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        todoList.add(_checklistController.text);
-                        _checklistController.text = "";
-                      });
-                    },
-                    child: Text('追加'),
-                  ),
-                ),
+                        width: _widthAddButton,
+                        padding: const EdgeInsets.all(10),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              todoList.add(_checklistController.text);
+                              _checklistController.text = "";
+                            });
+                          },
+                          child: Text('追加'),
+                        ),
+                      ),
               ],
             ),
             Row(
@@ -410,5 +426,4 @@ class _EntryState extends State<Entry> {
     );
     if (picked != null) setState(() => _time = picked);
   }
-
 }

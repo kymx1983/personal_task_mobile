@@ -3,6 +3,7 @@ import 'package:personal_task_mobile/common/common.dart';
 import 'dart:convert';
 
 import 'package:personal_task_mobile/models/task.dart';
+import "package:intl/intl.dart";
 
 class TaskController {
   static Future<List<Task>> readTasks() async {
@@ -46,7 +47,7 @@ class TaskController {
       body: {
         "user_id": task.userId.toString(),
         "title": task.title,
-        "target_date": "2021-06-19 06:58:32",
+        "target_date": DateFormat(Common.formatDateWithTime).format(task.targetDate),
         "memo": task.memo,
         "status": task.status.toString(),
       },
@@ -74,7 +75,7 @@ class TaskController {
         "id": task.id.toString(),
         "user_id": task.userId.toString(),
         "title": task.title,
-        "target_date": "2021-06-19 06:58:32",
+        "target_date": DateFormat(Common.formatDateWithTime).format(task.targetDate),
         "memo": task.memo,
         "status": task.status.toString(),
       },

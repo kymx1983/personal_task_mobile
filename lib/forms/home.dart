@@ -30,8 +30,8 @@ class _HomeState extends State<Home> {
     // サイズ関連
     final _size = MediaQuery.of(context).size;
 
-    // タスクの横幅（画面横幅 - アイコン横幅 - アイコン横幅）
-    final double _widthTask = _size.width - Common.widthIcon;
+    // タスクの横幅（画面横幅 - アイコン横幅 - アイコン横幅 - 20）
+    final double _widthTask = _size.width - Common.widthIcon - 20;
 
     return Scaffold(
       body: Container(
@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
                     return Row(
                       children: [
                         Container(
-                          width: _widthTask - 20,
+                          width: _widthTask,
                           child: CheckboxListTile(
                             activeColor: Colors.grey,
                             title: Text(tasks[index].title,

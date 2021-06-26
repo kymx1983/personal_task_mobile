@@ -17,6 +17,7 @@ class TaskController {
       return Task.setList(jsonResponse);
     }
 
+    // 失敗した場合はからのリストを返す
     return [];
   }
 
@@ -51,8 +52,14 @@ class TaskController {
       },
     );
 
-    var data = json.decode(response.body);
-    return data['data']['id'];
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      return data['data']['id'];
+    }
+
+    return 0;
+
+
   }
 
   static Future<int> updateTask(Task task) async {
@@ -73,8 +80,12 @@ class TaskController {
       },
     );
 
-    var data = json.decode(response.body);
-    return data['data']['id'];
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      return data['data']['id'];
+    }
+
+    return 0;
   }
 
   static Future<bool> delete(int taskId) async {
@@ -90,7 +101,10 @@ class TaskController {
       },
     );
 
-    var data = json.decode(response.body);
-    return true;
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    return false;
   }
 }

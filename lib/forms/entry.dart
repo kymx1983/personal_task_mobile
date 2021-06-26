@@ -57,6 +57,7 @@ class _EntryState extends State<Entry> {
       print("編集処理開始");
       Future(() async {
         task = await TaskController.showTasks(_taskId!);
+
         setState(() {
           _taskController.text = task.title;
           _memoController.text = task.memo;
@@ -74,7 +75,9 @@ class _EntryState extends State<Entry> {
   @override
   Widget build(BuildContext context) {
     // サイズ関連
-    final _size = MediaQuery.of(context).size;
+    final _size = MediaQuery
+        .of(context)
+        .size;
 
     // 項目名の横幅
     final double _widthItemTitle = 80;
@@ -134,17 +137,17 @@ class _EntryState extends State<Entry> {
                 ),
                 (_mode == EntryMode.update)
                     ? Container(
-                        width: 100,
-                        padding: const EdgeInsets.all(10),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await TaskController.delete(_taskId!);
-                            task.isDelete = true;
-                            Navigator.of(context).pop(task);
-                          },
-                          child: Text('削除'),
-                        ),
-                      )
+                  width: 100,
+                  padding: const EdgeInsets.all(10),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await TaskController.delete(_taskId!);
+                      task.isDelete = true;
+                      Navigator.of(context).pop(task);
+                    },
+                    child: Text('削除'),
+                  ),
+                )
                     : Text(""),
               ],
             ),
@@ -316,26 +319,26 @@ class _EntryState extends State<Entry> {
                 ),
                 _checklistController.text == ""
                     ? Container(
-                        width: _widthAddButton,
-                        padding: const EdgeInsets.all(10),
-                        child: ElevatedButton(
-                          onPressed: null,
-                          child: Text('追加'),
-                        ),
-                      )
+                  width: _widthAddButton,
+                  padding: const EdgeInsets.all(10),
+                  child: ElevatedButton(
+                    onPressed: null,
+                    child: Text('追加'),
+                  ),
+                )
                     : Container(
-                        width: _widthAddButton,
-                        padding: const EdgeInsets.all(10),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              todoList.add(_checklistController.text);
-                              _checklistController.text = "";
-                            });
-                          },
-                          child: Text('追加'),
-                        ),
-                      ),
+                  width: _widthAddButton,
+                  padding: const EdgeInsets.all(10),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        todoList.add(_checklistController.text);
+                        _checklistController.text = "";
+                      });
+                    },
+                    child: Text('追加'),
+                  ),
+                ),
               ],
             ),
             Row(
@@ -407,4 +410,5 @@ class _EntryState extends State<Entry> {
     );
     if (picked != null) setState(() => _time = picked);
   }
+
 }

@@ -73,10 +73,18 @@ class _HomeState extends State<Home> {
                             ),
                             controlAffinity: ListTileControlAffinity.leading,
                             value: tasks[index].isDone,
-                            onChanged: (bool? value) {
+                            onChanged: (bool? value) async{
                               setState(() {
                                 tasks[index].isDone = value!;
                               });
+
+                              print(value);
+                              if(value!) {
+                                await TaskController.done(tasks[index].id);
+                              } else {
+                                await TaskController.notDone(tasks[index].id);
+                              }
+
                             },
                           ),
                         ),

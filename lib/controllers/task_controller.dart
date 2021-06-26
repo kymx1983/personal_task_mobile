@@ -107,4 +107,44 @@ class TaskController {
 
     return false;
   }
+
+  static Future<bool> done(int taskId) async {
+    var url = Uri.http(
+      Common.domain,
+      '/tasks/done',
+    );
+
+    var response = await http.post(
+      url,
+      body: {
+        "id": taskId.toString(),
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    return false;
+  }
+
+  static Future<bool> notDone(int taskId) async {
+    var url = Uri.http(
+      Common.domain,
+      '/tasks/notdone',
+    );
+
+    var response = await http.post(
+      url,
+      body: {
+        "id": taskId.toString(),
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+
+    return false;
+  }
 }

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:personal_task_mobile/common/common.dart';
 import "package:intl/intl.dart";
 import 'package:personal_task_mobile/controllers/task_controller.dart';
+import 'package:personal_task_mobile/enums/entry_mode.dart';
 import 'package:personal_task_mobile/models/task.dart';
 
 class Entry extends StatefulWidget {
-  final int? mode;
+  final EntryMode? mode;
   final int? taskId;
 
   Entry({key: Key, this.mode, this.taskId});
@@ -35,7 +36,7 @@ class _EntryState extends State<Entry> {
   var _memoController = TextEditingController();
 
   // パラメータを取得
-  int? _mode = 0;
+  EntryMode? _mode;
   int? _taskId = 9;
 
   // タスク
@@ -52,7 +53,7 @@ class _EntryState extends State<Entry> {
 
     print("初期処理開始");
 
-    if (_mode == 2) {
+    if (_mode == EntryMode.update) {
       print("編集処理開始");
       Future(() async {
         task = await TaskController.showTasks(_taskId!);
@@ -109,9 +110,9 @@ class _EntryState extends State<Entry> {
                       task.memo = _memoController.text;
                       task.status = 0;
 
-                      if (_mode == 1) {
+                      if (_mode == EntryMode.create) {
                         task.id = await TaskController.createTask(task);
-                      } else if (_mode == 2) {
+                      } else if (_mode == EntryMode.update) {
                         task.id = _taskId!;
                         await TaskController.updateTask(task);
                       }
@@ -131,7 +132,7 @@ class _EntryState extends State<Entry> {
                     child: Text('キャンセル'),
                   ),
                 ),
-                (_mode == 2)
+                (_mode == EntryMode.update)
                     ? Container(
                         width: 100,
                         padding: const EdgeInsets.all(10),

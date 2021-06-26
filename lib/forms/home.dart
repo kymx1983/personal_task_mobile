@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personal_task_mobile/common/common.dart';
 import 'package:personal_task_mobile/controllers/task_controller.dart';
+import 'package:personal_task_mobile/enums/entry_mode.dart';
 import 'package:personal_task_mobile/forms/entry.dart';
 import 'package:personal_task_mobile/models/task.dart';
 import "package:intl/intl.dart";
@@ -91,7 +92,7 @@ class _HomeState extends State<Home> {
                                 MaterialPageRoute(builder: (context) {
                                   // 遷移先の画面としてリスト追加画面を指定
                                   return Entry(
-                                    mode: 2,
+                                    mode: EntryMode.update,
                                     taskId: tasks[index].id,
                                   );
                                 }),
@@ -127,7 +128,7 @@ class _HomeState extends State<Home> {
             MaterialPageRoute(builder: (context) {
               // 遷移先の画面としてリスト追加画面を指定
               return Entry(
-                mode: 1,
+                mode: EntryMode.create,
                 taskId: 0,
               );
             }),
